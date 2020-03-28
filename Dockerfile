@@ -2,7 +2,7 @@
 #
 FROM redhat-openjdk-18/openjdk18-openshift:1.8
 
-COPY /target/*.jar /deployments/app.jar
+COPY *.jar /deployments/app.jar
 
 EXPOSE 8080
 
