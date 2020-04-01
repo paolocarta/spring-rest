@@ -2,6 +2,18 @@
 
 # Spring Rest - A RESTful API written in Spring Boot
 
+## Setup projects and rolebindings
+```
+$ oc create -f ocp-projects/projects.yml
+```
+
+## Install the pipelines using helm
+
+```
+$ helm upgrade --install tekton-helm-pipeline ./1-tekton-helm-pipeline -n basic-spring-boot-cicd
+```
+
+
 This is a simple app using Spring Boot as part of [Red Hat OpenShift Application Runtimes](https://middlewareblog.redhat.com/2017/05/05/red-hat-openshift-application-runtimes-and-spring-boot-details-you-want-to-know/).
 
 ## Usage to Run Locally
