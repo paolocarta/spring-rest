@@ -1,10 +1,10 @@
 #
 #
-oc apply -f tekton-pipe/ocp-projects
+oc apply -f tekton-pipeline/ocp-projects
 sleep 1
 
 
-helm upgrade --install tekton-helm-pipeline ./tekton-pipe -n basic-spring-boot-cicd --values values.yaml
+helm upgrade --install tekton-helm-pipeline ./tekton-pipeline -n basic-spring-boot-cicd --values values.yaml
 
 sleep 1
 
