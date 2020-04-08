@@ -1,3 +1,0 @@
-[submodule "tekton-pipe"]
-	path = tekton-pipe
-	url = https://github.com/paolocarta/tekton-helm-pipeline.git
