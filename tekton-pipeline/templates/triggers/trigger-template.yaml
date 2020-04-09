@@ -16,6 +16,30 @@ spec:
 #
   resourcetemplates:
   - apiVersion: tekton.dev/v1alpha1
+    kind: PipelineResource
+    metadata:
+      name: $(params.git-repo-name)-git-$(params.git-branch)
+    spec:
+      type: git
+      params:
+      - name: url
+        value: $(params.git-repo-url)
+      - name: revision
+        value: $(params.git-branch)
+  ####
+  - apiVersion: tekton.dev/v1alpha1
+    kind: PipelineResource
+    metadata:
+      name: $(params.git-repo-name)-templates-$(params.git-branch)
+    spec:
+      type: git
+      params:
+      - name: url
+        value: $(params.git-repo-url)
+      - name: revision
+        value: $(params.git-branch)
+  ####
+  - apiVersion: tekton.dev/v1alpha1
     kind: PipelineRun
     metadata:
       name: $(params.git-repo-name)-pipe-run-$(git-branch)-$(git-commit-id)
@@ -38,27 +62,5 @@ spec:
         persistentVolumeClaim:
           claimName: maven-repo-pvc-2
       timeout: 1h0m0s
-  - apiVersion: tekton.dev/v1alpha1
-    kind: PipelineResource
-    metadata:
-      name: $(params.git-repo-name)-git-$(params.git-branch)
-    spec:
-      type: git
-      params:
-      - name: url
-        value: $(params.git-repo-url)
-      - name: revision
-        value: $(params.git-branch)
-  - apiVersion: tekton.dev/v1alpha1
-    kind: PipelineResource
-    metadata:
-      name: $(params.git-repo-name)-templates-$(params.git-branch)
-    spec:
-      type: git
-      params:
-      - name: url
-        value: $(params.git-repo-url)
-      - name: revision
-        value: $(params.git-branch)
 
 
