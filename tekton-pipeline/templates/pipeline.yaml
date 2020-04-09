@@ -54,6 +54,11 @@ spec:
   - name: deploy-to-prod
     taskRef:
       name: deploy
+    # conditions:
+    #   - conditionRef: "verify-no-file-exists-without-resource"
+    #     params:
+    #       - name: "path"
+    #         value: "$(params.path)"
     resources:
       inputs:
       - name: templates
