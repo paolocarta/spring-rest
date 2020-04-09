@@ -26,10 +26,10 @@ deploy:
 
 git:
   source:
-    repository: https://github.com/paolocarta/spring-rest.git
+    repository: https://github.com/paolocarta/spring-rest-tekton-pipeline
     revision: master
   templates:
-    repository: https://github.com/paolocarta/spring-rest.git
+    repository: https://github.com/paolocarta/spring-rest-tekton-pipeline
     revision: master
 
 pvc:
