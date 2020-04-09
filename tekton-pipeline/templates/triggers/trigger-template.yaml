@@ -36,3 +36,27 @@ spec:
         persistentVolumeClaim:
           claimName: maven-repo-pvc-2
       timeout: 1h0m0s
+  - apiVersion: tekton.dev/v1alpha1
+    kind: PipelineResource
+    metadata:
+      name: {{ include "springboot-tekton.fullname" . }}-git
+    spec:
+      type: git
+      params:
+      - name: url
+        value: $(params.git-repo-url)
+      - name: revision
+        value: $(params.git-revision)
+  - apiVersion: tekton.dev/v1alpha1
+    kind: PipelineResource
+    metadata:
+      name: {{ include "springboot-tekton.fullname" . }}-templates
+    spec:
+      type: git
+      params:
+      - name: url
+        value: $(params.git-repo-url)
+      - name: revision
+        value: $(params.git-revision)
+
+

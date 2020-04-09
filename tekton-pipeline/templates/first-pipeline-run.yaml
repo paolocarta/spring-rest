@@ -8,10 +8,10 @@ spec:
   resources:
   - name: {{ include "springboot-tekton.fullname" . }}-git
     resourceRef:
-      name: {{ include "springboot-tekton.fullname" . }}-git
+      name: {{ include "springboot-tekton.fullname" . }}-git-first-run
   - name: {{ include "springboot-tekton.fullname" . }}-templates
     resourceRef:
-      name: {{ include "springboot-tekton.fullname" . }}-templates
+      name: {{ include "springboot-tekton.fullname" . }}-templates-first-run
   - name: {{ include "springboot-tekton.fullname" . }}-image
     resourceRef:
       name: {{ include "springboot-tekton.fullname" . }}-image

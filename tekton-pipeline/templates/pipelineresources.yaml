@@ -1,7 +1,7 @@
 apiVersion: tekton.dev/v1alpha1
 kind: PipelineResource
 metadata:
-  name: {{ include "springboot-tekton.fullname" . }}-git
+  name: {{ include "springboot-tekton.fullname" . }}-git-first-run
 spec:
   type: git
   params:
@@ -13,7 +13,7 @@ spec:
 apiVersion: tekton.dev/v1alpha1
 kind: PipelineResource
 metadata:
-  name: {{ include "springboot-tekton.fullname" . }}-templates
+  name: {{ include "springboot-tekton.fullname" . }}-templates-first-run
 spec:
   type: git
   params:
