@@ -23,10 +23,10 @@ spec:
       resources:
       - name: {{ include "springboot-tekton.fullname" . }}-git
         resourceRef:
-          name: {{ include "springboot-tekton.fullname" . }}-git
+          name: $(params.git-repo-name)-git-$(params.git-revision)
       - name: {{ include "springboot-tekton.fullname" . }}-templates
         resourceRef:
-          name: {{ include "springboot-tekton.fullname" . }}-templates
+          name: $(params.git-repo-name)-templates-$(params.git-revision)
       - name: {{ include "springboot-tekton.fullname" . }}-image
         resourceRef:
           name: {{ include "springboot-tekton.fullname" . }}-image
@@ -39,7 +39,7 @@ spec:
   - apiVersion: tekton.dev/v1alpha1
     kind: PipelineResource
     metadata:
-      name: {{ include "springboot-tekton.fullname" . }}-git
+      name: $(params.git-repo-name)-git-$(params.git-revision)
     spec:
       type: git
       params:
@@ -50,7 +50,7 @@ spec:
   - apiVersion: tekton.dev/v1alpha1
     kind: PipelineResource
     metadata:
-      name: {{ include "springboot-tekton.fullname" . }}-templates
+      name: $(params.git-repo-name)-templates-$(params.git-revision)
     spec:
       type: git
       params:
