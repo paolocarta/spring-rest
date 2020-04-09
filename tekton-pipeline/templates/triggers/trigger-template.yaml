@@ -6,7 +6,9 @@ spec:
   params:
   - name: git-repo-url
     description: The git repository url
-  - name: git-revision
+  - name: git-commit-id
+    description: The git commit sha
+  - name: git-branch
     description: The git revision
     default: master
   - name: git-repo-name
@@ -16,17 +18,17 @@ spec:
   - apiVersion: tekton.dev/v1alpha1
     kind: PipelineRun
     metadata:
-      name: $(params.git-repo-name)-pipe-run-$(uid)
+      name: $(params.git-repo-name)-pipe-run-$(git-branch)-$(git-commit-id)
     spec:
       pipelineRef:
         name: {{ include "springboot-tekton.fullname" . }}-pipeline
       resources:
       - name: {{ include "springboot-tekton.fullname" . }}-git
         resourceRef:
-          name: $(params.git-repo-name)-git-$(params.git-revision)
+          name: $(params.git-repo-name)-git-$(params.git-branch)
       - name: {{ include "springboot-tekton.fullname" . }}-templates
         resourceRef:
-          name: $(params.git-repo-name)-templates-$(params.git-revision)
+          name: $(params.git-repo-name)-templates-$(params.git-branch)
       - name: {{ include "springboot-tekton.fullname" . }}-image
         resourceRef:
           name: {{ include "springboot-tekton.fullname" . }}-image
@@ -39,24 +41,24 @@ spec:
   - apiVersion: tekton.dev/v1alpha1
     kind: PipelineResource
     metadata:
-      name: $(params.git-repo-name)-git-$(params.git-revision)
+      name: $(params.git-repo-name)-git-$(params.git-branch)
     spec:
       type: git
       params:
       - name: url
         value: $(params.git-repo-url)
       - name: revision
-        value: $(params.git-revision)
+        value: $(params.git-branch)
   - apiVersion: tekton.dev/v1alpha1
     kind: PipelineResource
     metadata:
-      name: $(params.git-repo-name)-templates-$(params.git-revision)
+      name: $(params.git-repo-name)-templates-$(params.git-branch)
     spec:
       type: git
       params:
       - name: url
         value: $(params.git-repo-url)
       - name: revision
-        value: $(params.git-revision)
+        value: $(params.git-branch)
 
 
