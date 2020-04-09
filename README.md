@@ -7,14 +7,27 @@
 $ oc create -f ocp-projects/projects.yml
 ```
 
-## Install the pipelines using helm
+## Install the pipeline and projects setup
 
+If you do not have helm3 installed, execute the script:
+
+```shell
+./install-helm.sh
 ```
-$ helm upgrade --install tekton-helm-pipeline ./1-tekton-helm-pipeline -n basic-spring-boot-cicd
+
+Execute the setup script:
+
+```shell
+./setup.sh
 ```
 
+The pipeline installation will also start the first pipeline execution.
 
-This is a simple app using Spring Boot as part of [Red Hat OpenShift Application Runtimes](https://middlewareblog.redhat.com/2017/05/05/red-hat-openshift-application-runtimes-and-spring-boot-details-you-want-to-know/).
+## Application
+
+The code is simple app using Spring Boot as part of [Red Hat OpenShift Application Runtimes](https://middlewareblog.redhat.com/2017/05/05/red-hat-openshift-application-runtimes-and-spring-boot-details-you-want-to-know/).
+
+
 
 ## Usage to Run Locally
 
