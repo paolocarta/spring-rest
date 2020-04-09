@@ -2,11 +2,6 @@
 
 # Spring Rest - A RESTful API written in Spring Boot
 
-## Setup projects and rolebindings
-```
-$ oc create -f ocp-projects/projects.yml
-```
-
 ## Install the pipeline and projects setup
 
 If you do not have helm3 installed, execute the script:
@@ -22,6 +17,17 @@ Execute the setup script:
 ```
 
 The pipeline installation will also start the first pipeline execution.
+
+## Webhooks
+
+If you want to test the pipeline triggering via webhooks you should register a webhook in your forked repo. The Webhook should point to your listener's route.
+
+In order to get the route execute this command in the namespace basic-spring-boot-cicd (You should be there by default):
+
+```shell
+oc get route webhook-listener -ojsonpath='{.spec.host}'
+```
+
 
 ## Application
 
