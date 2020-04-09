@@ -14,6 +14,7 @@ spec:
     type: git
   - name: {{ include "springboot-tekton.fullname" . }}-image
     type: image
+  ####
   tasks:
   - name: maven-build-binary-build
     taskRef: 
@@ -28,6 +29,7 @@ spec:
     workspaces:
     - name: maven-repo
       workspace: local-maven-repo
+  ####
   - name: deploy-to-stage
     taskRef:
       name: deploy
@@ -48,6 +50,7 @@ spec:
       value: {{ include "springboot-tekton.fullname" . }} 
     - name: deployment
       value: {{ include "springboot-tekton.fullname" . }} 
+  ####
   - name: deploy-to-prod
     taskRef:
       name: deploy
