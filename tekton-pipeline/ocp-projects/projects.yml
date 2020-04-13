@@ -4,19 +4,19 @@ items:
 - kind: ProjectRequest
   apiVersion: v1
   metadata:
-    name: basic-spring-boot-cicd
+    name: basic-spring-boot-cicd-REPLACEME
     creationTimestam: null
   displayName: Spring Rest App - Build
 - kind: ProjectRequest
   apiVersion: v1
   metadata:
-    name: basic-spring-boot-stage
+    name: basic-spring-boot-stage-REPLACEME
     creationTimestam: null
   displayName: Spring Rest App - Stage
 - kind: ProjectRequest
   apiVersion: v1
   metadata:
-    name: basic-spring-boot-prod
+    name: basic-spring-boot-prod-REPLACEME
     creationTimestam: null
   displayName: Spring Rest App - Prod
 ---
@@ -28,7 +28,7 @@ items:
   metadata:
     labels:
     name: pipeline_edit
-    namespace: basic-spring-boot-stage
+    namespace: basic-spring-boot-stage-REPLACEME
   roleRef:
     apiGroup: rbac.authorization.k8s.io
     kind: ClusterRole
@@ -36,13 +36,13 @@ items:
   subjects:
   - kind: ServiceAccount
     name: pipeline
-    namespace: basic-spring-boot-cicd
+    namespace: basic-spring-boot-cicd-REPLACEME
 - apiVersion: rbac.authorization.k8s.io/v1
   kind: RoleBinding
   metadata:
     labels:
     name: pipeline_edit
-    namespace: basic-spring-boot-prod
+    namespace: basic-spring-boot-prod-REPLACEME
   roleRef:
     apiGroup: rbac.authorization.k8s.io
     kind: ClusterRole
@@ -50,4 +50,4 @@ items:
   subjects:
   - kind: ServiceAccount
     name: pipeline
-    namespace: basic-spring-boot-cicd
+    namespace: basic-spring-boot-cicd-REPLACEME
