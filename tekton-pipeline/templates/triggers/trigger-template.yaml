@@ -13,12 +13,15 @@ spec:
     default: master
   - name: git-repo-name
     description: The name of the deployment to be created / patched
-#
+####
   resourcetemplates:
   - apiVersion: tekton.dev/v1alpha1
     kind: PipelineResource
     metadata:
-      name: $(params.git-repo-name)-git-$(params.git-branch)
+      name: $(params.git-repo-name)-code-$(uid)
+      labels:
+        commit-id: $(params.git-commit-id)
+        # branch: $(params.git-branch)
     spec:
       type: git
       params:
@@ -30,7 +33,10 @@ spec:
   - apiVersion: tekton.dev/v1alpha1
     kind: PipelineResource
     metadata:
-      name: $(params.git-repo-name)-templates-$(params.git-branch)
+      name: $(params.git-repo-name)-man-$(uid)
+      labels:
+        commit-id: $(params.git-commit-id)
+        # branch: $(params.git-branch)
     spec:
       type: git
       params:
@@ -42,17 +48,19 @@ spec:
   - apiVersion: tekton.dev/v1alpha1
     kind: PipelineRun
     metadata:
-      name: $(params.git-repo-name)-pipe-run-$(git-branch)-$(git-commit-id)
+      name: $(params.git-repo-name)-pr-$(uid)
+      labels:
+        commit-id: $(params.git-commit-id)
     spec:
       pipelineRef:
         name: {{ include "springboot-tekton.fullname" . }}-pipeline
       resources:
       - name: {{ include "springboot-tekton.fullname" . }}-git
         resourceRef:
-          name: $(params.git-repo-name)-git-$(params.git-branch)
+          name: $(params.git-repo-name)-code-$(uid)
       - name: {{ include "springboot-tekton.fullname" . }}-templates
         resourceRef:
-          name: $(params.git-repo-name)-templates-$(params.git-branch)
+          name: $(params.git-repo-name)-man-$(uid)
       - name: {{ include "springboot-tekton.fullname" . }}-image
         resourceRef:
           name: {{ include "springboot-tekton.fullname" . }}-image
@@ -60,7 +68,7 @@ spec:
       workspaces:
       - name: local-maven-repo
         persistentVolumeClaim:
-          claimName: maven-repo-pvc-2
+          claimName: maven-repo-pvc-spring-rest
       timeout: 1h0m0s
 
 
