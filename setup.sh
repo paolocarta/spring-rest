@@ -1,5 +1,7 @@
 #
 #
+sed "s/REPLACEME/$GITHUB_USER/g" tekton-pipeline/ocp-projects/projects.input.yaml > tekton-pipeline/ocp-projects/projects.yaml
+
 oc apply -f tekton-pipeline/ocp-projects
 sleep 1
 
