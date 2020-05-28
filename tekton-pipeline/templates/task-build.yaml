@@ -10,6 +10,7 @@ spec:
   params:
     - default:
         - package
+        - -DskipTests
       description: The Maven goals to run
       name: GOALS
       type: array
@@ -98,7 +99,28 @@ spec:
     command: ["cp"]
     args:
       - /workspace/source/Dockerfile
-      - /workspace/source/upload 
+      - /workspace/source/upload
+  - name: new-version
+    image: clamer/kikd:1.0.2
+    workingDir: /workspace/source
+    command: ["/bin/bash"]
+    args:
+      - "-c"
+      - "cp -r /tekton/home/.ssh /root/ && git fetch --tags && jx-release-version > /tekton/home/version && cat /tekton/home/version"
+  - name: tag-git-repo
+    image: clamer/kikd:1.0.2
+    workingDir: /workspace/source
+    command: ["/bin/bash"]
+    args:
+      - "-c"
+      - "git tag $(cat /tekton/home/version)"
+  - name: push-git-tag
+    image: clamer/kikd:1.0.2
+    workingDir: /workspace/source
+    command: ["/bin/bash"]
+    args:
+      - -c
+      - "cp -r /tekton/home/.ssh /root/ && git push origin --tags"
   - name: build-image
     image: $(inputs.params.BUILDER_IMAGE)
     workingDir: /workspace/source/upload
@@ -111,7 +133,7 @@ spec:
       - -f
       - "$(inputs.params.DOCKERFILE)"
       - -t
-      - "$(outputs.resources.image.url)"
+      - "$(outputs.resources.image.url):1.0.0"
       - "$(inputs.params.CONTEXT)"
     volumeMounts:
     - name: varlibcontainers
@@ -141,3 +163,6 @@ spec:
   - name: varlibcontainers
     persistentVolumeClaim:
       claimName: container-layers-spring-rest
+  - name: ssh-key
+    secret:
+      secretName: tekton-pipe-ssh-key

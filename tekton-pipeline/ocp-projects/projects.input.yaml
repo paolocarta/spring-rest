@@ -20,34 +20,62 @@ items:
     creationTimestam: null
   displayName: Spring Rest App - Prod
 ---
-apiVersion: v1
-kind: List
-items:
-- apiVersion: rbac.authorization.k8s.io/v1
-  kind: RoleBinding
-  metadata:
-    labels:
-    name: pipeline_edit
-    namespace: basic-spring-boot-stage-REPLACEME
-  roleRef:
-    apiGroup: rbac.authorization.k8s.io
-    kind: ClusterRole
-    name: edit
-  subjects:
-  - kind: ServiceAccount
-    name: pipeline
-    namespace: basic-spring-boot-cicd-REPLACEME
-- apiVersion: rbac.authorization.k8s.io/v1
-  kind: RoleBinding
-  metadata:
-    labels:
-    name: pipeline_edit
-    namespace: basic-spring-boot-prod-REPLACEME
-  roleRef:
-    apiGroup: rbac.authorization.k8s.io
-    kind: ClusterRole
-    name: edit
-  subjects:
-  - kind: ServiceAccount
-    name: pipeline
-    namespace: basic-spring-boot-cicd-REPLACEME
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  labels: {}
+  name: pipeline_edit
+  namespace: basic-spring-boot-stage-REPLACEME
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: edit
+subjects:
+- kind: ServiceAccount
+  name: pipeline
+  namespace: basic-spring-boot-cicd-REPLACEME
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  labels: {}
+  name: pipeline_edit
+  namespace: basic-spring-boot-prod-REPLACEME
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: edit
+subjects:
+- kind: ServiceAccount
+  name: pipeline
+  namespace: basic-spring-boot-cicd-REPLACEME
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  labels: {}
+  name: pipeline_edit-with-key
+  namespace: basic-spring-boot-stage-REPLACEME
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: edit
+subjects:
+- kind: ServiceAccount
+  name: pipeline-with-key
+  namespace: basic-spring-boot-cicd-REPLACEME
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  labels: {}
+  name: pipeline_edit-with-key
+  namespace: basic-spring-boot-prod-REPLACEME
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: edit
+subjects:
+- kind: ServiceAccount
+  name: pipeline-with-key
+  namespace: basic-spring-boot-cicd-REPLACEME
