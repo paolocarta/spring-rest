@@ -6,3 +6,5 @@ target
 .idea
 *.iml
 tekton-pipeline/ocp-projects/projects.yaml
+
+tekton-pipeline/pipeline-secret.yaml

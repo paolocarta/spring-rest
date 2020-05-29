@@ -55,7 +55,7 @@ spec:
     taskRef:
       name: deploy
     # conditions:
-    #   - conditionRef: "verify-no-file-exists-without-resource"
+    #   - conditionRef: "verify"
     #     params:
     #       - name: "path"
     #         value: "$(params.path)"
