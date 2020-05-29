@@ -41,9 +41,9 @@ spec:
       - maven-build-binary-build
     params:
     - name: fromNamespace
-      value: {{ .Values.deploy.namespace.prefix }}-cicd
+      value: {{ .Values.deploy.namespace.prefix }}-cicd-paolocarta
     - name: toNamespace
-      value: {{ .Values.deploy.namespace.prefix }}-stage  
+      value: {{ .Values.deploy.namespace.prefix }}-stage-paolocarta  
     - name: tag
       value: latest 
     - name: imageStream
@@ -67,9 +67,9 @@ spec:
       - deploy-to-stage
     params:
     - name: fromNamespace
-      value: {{ .Values.deploy.namespace.prefix }}-stage
+      value: {{ .Values.deploy.namespace.prefix }}-stage-paolocarta
     - name: toNamespace
-      value: {{ .Values.deploy.namespace.prefix }}-prod  
+      value: {{ .Values.deploy.namespace.prefix }}-prod-paolocarta  
     - name: tag
       value: latest 
     - name: imageStream
