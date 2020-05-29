@@ -124,8 +124,10 @@ spec:
   - name: build-image
     image: $(inputs.params.BUILDER_IMAGE)
     workingDir: /workspace/source/upload
-    command: ['buildah']
+    command: ['/bin/bash']
     args:
+      - -c
+      - buildah
       - bud
       - --format=$(inputs.params.FORMAT)
       - --tls-verify=$(inputs.params.TLSVERIFY)
@@ -133,7 +135,7 @@ spec:
       - -f
       - "$(inputs.params.DOCKERFILE)"
       - -t
-      - "$(outputs.resources.image.url):1.0.0"
+      - "$(outputs.resources.image.url):$(cat /tekton/home/version)"
       - "$(inputs.params.CONTEXT)"
     volumeMounts:
     - name: varlibcontainers
@@ -163,6 +165,3 @@ spec:
   - name: varlibcontainers
     persistentVolumeClaim:
       claimName: container-layers-spring-rest
-  - name: ssh-key
-    secret:
-      secretName: tekton-pipe-ssh-key
