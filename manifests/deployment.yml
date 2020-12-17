@@ -72,7 +72,7 @@ objects:
             value: ${JWS_ADMIN_USERNAME}
           - name: JWS_ADMIN_PASSWORD
             value: ${JWS_ADMIN_PASSWORD}
-          image: ${APPLICATION_NAME}:${IMAGE_TAG}
+          image: image-registry.openshift-image-registry.svc:5000/${NAMESPACE}/${APPLICATION_NAME}:${IMAGE_TAG}
           imagePullPolicy: Always
           name: ${APPLICATION_NAME}
           ports:
