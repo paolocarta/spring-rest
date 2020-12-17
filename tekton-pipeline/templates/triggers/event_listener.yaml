@@ -7,5 +7,6 @@ spec:
   triggers:
   - bindings:
     - name: {{ include "springboot-tekton.fullname" . }}-tb
+      ref: {{ include "springboot-tekton.fullname" . }}-tb
     template:
       name: {{ include "springboot-tekton.fullname" . }}-tt
