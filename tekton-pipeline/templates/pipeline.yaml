@@ -47,12 +47,13 @@ spec:
       value: {{ .Values.deploy.namespace.prefix }}-cicd-paolocarta
     - name: toNamespace
       value: {{ .Values.deploy.namespace.prefix }}-stage-paolocarta  
-    - name: tag
-      value: latest 
     - name: imageStream
       value: {{ include "springboot-tekton.fullname" . }} 
     - name: deployment
-      value: {{ include "springboot-tekton.fullname" . }} 
+      value: {{ include "springboot-tekton.fullname" . }}
+    workspaces:
+    - name: output-area
+      workspace: exchange-area
   ####
   # - name: deploy-to-prod
   #   taskRef:

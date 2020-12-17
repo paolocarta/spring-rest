@@ -72,7 +72,7 @@ objects:
             value: ${JWS_ADMIN_USERNAME}
           - name: JWS_ADMIN_PASSWORD
             value: ${JWS_ADMIN_PASSWORD}
-          image: ${APPLICATION_NAME}
+          image: ${APPLICATION_NAME}:${IMAGE_TAG}
           imagePullPolicy: Always
           name: ${APPLICATION_NAME}
           ports:
@@ -105,6 +105,10 @@ parameters:
   name: APPLICATION_NAME
   required: true
   value: jws-app
+- description: The version tag.
+  name: IMAGE_TAG
+  required: true
+  value: latest
 - description: The namespace to deploy into
   name: NAMESPACE
   required: true

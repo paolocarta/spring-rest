@@ -12,9 +12,6 @@ spec:
     - description: The namespace we are tagging to
       name: toNamespace
       type: string
-    - description: The image tag
-      name: tag
-      type: string
     - description: The imageStream
       name: imageStream
       type: string
@@ -25,33 +22,36 @@ spec:
     inputs:
       - name: templates
         type: git
+  workspaces:
+    - name: output-area
   steps:
     - name: update-deployment-from-template
       image: quay.io/openshift-pipeline/openshift-cli:latest
       workingDir: /workspace/templates/manifests
       script: |
         #!/usr/bin/env bash
-        echo "Updating namespace $(inputs.params.toNamespace)"
+        echo "Updating namespace $(params.toNamespace)"
         oc process \
           -f deployment.yml \
-          -p "APPLICATION_NAME=$(inputs.params.imageStream)" \
-          -p "NAMESPACE=$(inputs.params.toNamespace)" \
+          -p "APPLICATION_NAME=$(params.imageStream)" \
+          -p "IMAGE_TAG=$(cat /workspace/output-area/version)" \
+          -p "NAMESPACE=$(params.toNamespace)" \
           -p READINESS_PATH="/health" \
           -p READINESS_RESPONSE="status.:.UP" \
           | oc apply -f -
     - name: tag-image
       image: quay.io/openshift-pipeline/openshift-cli:latest
-      command: ["/usr/local/bin/oc"]
+      command: ["oc"]
       args:
         - tag
-        - "$(inputs.params.fromNamespace)/$(inputs.params.imageStream):$(inputs.params.tag)"
-        - "$(inputs.params.toNamespace)/$(inputs.params.imageStream):$(inputs.params.tag)"
+        - "$(params.fromNamespace)/$(params.imageStream):$(cat /workspace/output-area/version)"
+        - "$(params.toNamespace)/$(params.imageStream):$(cat /workspace/output-area/version)"
     - name: verify-deployment
       image: quay.io/openshift-pipeline/openshift-cli:latest
-      command: ["/usr/local/bin/oc"]
+      command: ["oc"]
       args:
         - rollout
         - status
-        - "dc/$(inputs.params.deployment)"
+        - "dc/$(params.deployment)"
         - -n
-        - "$(inputs.params.toNamespace)"
+        - "$(params.toNamespace)"
