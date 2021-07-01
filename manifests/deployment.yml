@@ -72,7 +72,7 @@ objects:
             value: ${JWS_ADMIN_USERNAME}
           - name: JWS_ADMIN_PASSWORD
             value: ${JWS_ADMIN_PASSWORD}
-          image: ${APPLICATION_NAME}
+          image: image-registry.openshift-image-registry.svc:5000/${NAMESPACE}/${APPLICATION_NAME}:${IMAGE_TAG}
           imagePullPolicy: Always
           name: ${APPLICATION_NAME}
           ports:
@@ -91,20 +91,24 @@ objects:
                 |grep -iq '${READINESS_RESPONSE}'
         terminationGracePeriodSeconds: 60
     triggers:
-    - imageChangeParams:
-        automatic: true
-        containerNames:
-        - ${APPLICATION_NAME}
-        from:
-          kind: ImageStreamTag
-          name: ${APPLICATION_NAME}:latest
-      type: ImageChange
+    # - imageChangeParams:
+    #     automatic: true
+    #     containerNames:
+    #     - ${APPLICATION_NAME}
+    #     from:
+    #       kind: ImageStreamTag
+    #       name: ${APPLICATION_NAME}:${IMAGE_TAG}
+    #   type: ImageChange
     - type: ConfigChange
 parameters:
 - description: The name for the application.
   name: APPLICATION_NAME
   required: true
   value: jws-app
+- description: The version tag.
+  name: IMAGE_TAG
+  required: true
+  value: latest
 - description: The namespace to deploy into
   name: NAMESPACE
   required: true

@@ -7,8 +7,9 @@ metadata:
 spec:
   workspaces:
   - name: local-maven-repo
+  - name: exchange-area
   resources:
-  - name: {{ include "springboot-tekton.fullname" . }}-git
+  - name: {{ include "springboot-tekton.fullname" . }}-source
     type: git
   - name: {{ include "springboot-tekton.fullname" . }}-templates
     type: git
@@ -16,19 +17,21 @@ spec:
     type: image
   ####
   tasks:
-  - name: maven-build-binary-build
+  - name: maven-and-image-build
     taskRef: 
-      name: maven-build-binary-build
+      name: maven-and-image-build
     resources:
       inputs:
       - name: source
-        resource: {{ include "springboot-tekton.fullname" . }}-git
+        resource: {{ include "springboot-tekton.fullname" . }}-source
       outputs:
       - name: image
         resource: {{ include "springboot-tekton.fullname" . }}-image
     workspaces:
     - name: maven-repo
       workspace: local-maven-repo
+    - name: output-area
+      workspace: exchange-area
   ####
   - name: deploy-to-stage
     taskRef:
@@ -38,41 +41,42 @@ spec:
       - name: templates
         resource: {{ include "springboot-tekton.fullname" . }}-templates
     runAfter:
-      - maven-build-binary-build
+      - maven-and-image-build
     params:
     - name: fromNamespace
       value: {{ .Values.deploy.namespace.prefix }}-cicd-paolocarta
     - name: toNamespace
       value: {{ .Values.deploy.namespace.prefix }}-stage-paolocarta  
-    - name: tag
-      value: latest 
-    - name: imageStream
-      value: {{ include "springboot-tekton.fullname" . }} 
-    - name: deployment
-      value: {{ include "springboot-tekton.fullname" . }} 
-  ####
-  - name: deploy-to-prod
-    taskRef:
-      name: deploy
-    # conditions:
-    #   - conditionRef: "verify"
-    #     params:
-    #       - name: "path"
-    #         value: "$(params.path)"
-    resources:
-      inputs:
-      - name: templates
-        resource: {{ include "springboot-tekton.fullname" . }}-templates
-    runAfter:
-      - deploy-to-stage
-    params:
-    - name: fromNamespace
-      value: {{ .Values.deploy.namespace.prefix }}-stage-paolocarta
-    - name: toNamespace
-      value: {{ .Values.deploy.namespace.prefix }}-prod-paolocarta  
-    - name: tag
-      value: latest 
     - name: imageStream
       value: {{ include "springboot-tekton.fullname" . }} 
     - name: deployment
       value: {{ include "springboot-tekton.fullname" . }}
+    workspaces:
+    - name: output-area
+      workspace: exchange-area
+  ####
+  # - name: deploy-to-prod
+  #   taskRef:
+  #     name: deploy
+  #   conditions:
+  #     - conditionRef: "verify"
+  #       params:
+  #         - name: "path"
+  #           value: "$(params.path)"
+  #   resources:
+  #     inputs:
+  #     - name: templates
+  #       resource: {{ include "springboot-tekton.fullname" . }}-templates
+  #   runAfter:
+  #     - deploy-to-stage
+  #   params:
+  #   - name: fromNamespace
+  #     value: {{ .Values.deploy.namespace.prefix }}-stage-paolocarta
+  #   - name: toNamespace
+  #     value: {{ .Values.deploy.namespace.prefix }}-prod-paolocarta  
+  #   - name: tag
+  #     value: latest 
+  #   - name: imageStream
+  #     value: {{ include "springboot-tekton.fullname" . }} 
+  #   - name: deployment
+  #     value: {{ include "springboot-tekton.fullname" . }}
