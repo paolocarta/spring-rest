@@ -1,6 +1,6 @@
 #
 #
-FROM redhat-openjdk-18/openjdk18-openshift:1.8
+FROM openjdk:8u292-jre-slim
 
 COPY *.jar /deployments/app.jar
 
