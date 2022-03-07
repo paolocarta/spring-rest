@@ -42,6 +42,8 @@ stages {
 
     stage("Initialize") {
         
+        agent any
+
         steps {
             script {
                     // notifyBuild('STARTED')
