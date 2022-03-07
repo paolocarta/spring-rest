@@ -1,5 +1,7 @@
 pipeline {
 
+    agent any
+
     parameters {
 
         booleanParam(defaultValue: false,description: 'Deploy to Prod Environment ?', name: 'DEPLOY_PROD')
