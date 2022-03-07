@@ -5,7 +5,7 @@ pipeline {
     parameters {
 
         booleanParam(defaultValue: false,description: 'Deploy to Prod Environment ?', name: 'DEPLOY_PROD')
-        string(defaultValue: "sdwa-asda", description: 'Maven Settings File Id', name: 'MAVEN_SETTINGS_ID')
+        string(defaultValue: "0a4cc883-2d23-423c-ba2c-29f535162d0c", description: 'Maven Settings File Id', name: 'MAVEN_SETTINGS_ID')
         string(defaultValue: "http://baifuseqa01.internal.com/nexus", description: 'Nexus URL', name: 'NEXUS_URL')
         string(defaultValue: "artifacts", description: 'Nexus hosted repo name', name: 'NEXUS_HOSTED_NAME_RELEASES')
         string(defaultValue: "artifacts-snapshots", description: 'Nexus hosted snapshots repo name', name: 'NEXUS_HOSTED_NAME_SNAPSHOTS')
