@@ -1,14 +1,3 @@
-// openshift.withCluster() {
-//   env.NAMESPACE = openshift.project()
-//   env.APP_NAME = "${env.JOB_NAME}".replaceAll(/-?pipeline-?/, '').replaceAll(/-?${env.NAMESPACE}-?/, '')
-//   echo "Starting Pipeline for ${APP_NAME}..."
-//   def projectBase = "${env.NAMESPACE}".replaceAll(/-dev/, '')
-//   env.STAGE1 = "${projectBase}-dev"
-//   env.STAGE2 = "${projectBase}-stage"
-//   env.STAGE3 = "${projectBase}-prod"
-// }
-
-
 pipeline {
 
     parameters {
@@ -25,17 +14,17 @@ pipeline {
     options {
         
         // use colors in Jenkins console output
-        ansiColor('xterm')
+        // ansiColor('xterm')
         
         // discard old builds
         buildDiscarder logRotator(daysToKeepStr: '30', numToKeepStr: '45')
         
         // disable concurrent builds and disable build resume
-        disableConcurrentBuilds()
-        disableResume()
+        // disableConcurrentBuilds()
+        // disableResume()
 
         // timeout on whole pipeline job
-        timeout(time: 2, unit: 'HOURS')
+        timeout(time: 1, unit: 'HOURS')
     }
     
     triggers {
